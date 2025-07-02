@@ -1,8 +1,6 @@
 
-# Project Title
-
-A brief description of what this project does and who it's for
-
+# Censo comunidades rurales
+Brinda una interfaz grafica para la racoleccion de datos personales que seran verificados para luego unificar la informacion en una base de datos (sqlite3)
 
 ## API Reference
 
@@ -38,7 +36,7 @@ Takes two numbers and returns the sum.
 
 ## Authors
 
-- [@octokatherine](https://www.github.com/octokatherine)
+- [@Kalixt044](https://github.com/Kalixt044)
 
 
 ## Installation
