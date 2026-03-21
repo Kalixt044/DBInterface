@@ -215,3 +215,14 @@ pip-selfcheck.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,pythonvanilla,visualstudiocode,venv
+# Ignorar el entorno virtual (si la carpeta se llama env o venv)
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ignorar archivo de variables de entorno
+.env
+.env.local
+.env.*.local
