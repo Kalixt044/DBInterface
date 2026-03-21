@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CENSO RURAL</title>
+  <link rel="stylesheet" href="./CSS/styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body class="theme-auto">
+  <!-- NAVBAR -->
+  <header class="nav" role="banner">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="/" aria-label="Inicio">
+        <svg class="nav__logo" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
+        </svg>
+        <span class="nav__brand-text">Lorem ipsum dolor </span>
+      </a>
+
+      <!-- Botón hamburguesa (móvil) -->
+      <button class="nav__toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Abrir menú">
+        <span class="nav__toggle-bar" aria-hidden="true"></span>
+        <span class="nav__toggle-bar" aria-hidden="true"></span>
+        <span class="nav__toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <!-- Menú -->
+      <nav id="nav-menu" class="nav__menu" aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link is-active" href="#">Inicio</a></li>
+          <li><a class="nav__link" href="./form.html">Formulario</a></li>
+          <li><a class="nav__link" href="#">Precios</a></li>
+          <li class="nav__item--cta">
+            <a class="btn btn--primary" href="#">Contáctanos</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container flow" id="contenido">
+    <h1>Patrones reutilizables</h1>
+
+    <!-- TARJETA -->
+    <section aria-labelledby="tarjeta-title" class="flow">
+      <h2 id="tarjeta-title">Tarjeta (Card)</h2>
+      <article class="card">
+        <img class="card__media" src="https://picsum.photos/640/360" alt="Vista previa del artículo" width="640" height="360" loading="lazy" />
+        <div class="card__body">
+          <h3 class="card__title">Título de la tarjeta</h3>
+          <p class="card__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam beatae, eos consectetur laborum velit, optio dolorem sequi ullam accusantium iure iste nulla maxime, culpa alias ipsum molestiae sunt repudiandae delectus.</p>
+          <div class="card__meta">
+            <span class="badge">Nuevo</span>
+            <time datetime="2026-02-19">19 Feb 2026</time>
+          </div>
+          <div class="card__actions">
+            <a href="#" class="btn btn--secondary">Leer más</a>
+            <button class="btn btn--ghost">Guardar</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- LISTA ORDENADA (con pasos) -->
+    <section aria-labelledby="lista-title" class="flow">
+      <h2 id="lista-title">Lista ordenada (pasos)</h2>
+      <ol class="steps" role="list">
+        <li class="steps__item">
+          <h3 class="steps__title">Planifica</h3>
+          <p class="steps__desc">Define objetivos, alcance y entregables.</p>
+        </li>
+        <li class="steps__item">
+          <h3 class="steps__title">Diseña</h3>
+          <p class="steps__desc">Crea bocetos, componentes y flujos.</p>
+        </li>
+        <li class="steps__item">
+          <h3 class="steps__title">Implementa</h3>
+          <p class="steps__desc">Desarrolla con buenas prácticas y pruebas.</p>
+        </li>
+        <li class="steps__item">
+          <h3 class="steps__title">Lanza</h3>
+          <p class="steps__desc">Monitorea, aprende y itera.</p>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__grid">
+      <section class="footer__col">
+        <h2 class="footer__title">CENSO RURAL</h2>
+        <p class="footer__text">Construyendo experiencias web accesibles y robustas.</p>
+      </section>
+      <nav class="footer__col" aria-labelledby="footer-nav-1">
+        <h2 id="footer-nav-1" class="footer__title">Recursos</h2>
+        <ul class="footer__links">
+          <li><a href="#">Guías</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Ayuda</a></li>
+        </ul>
+      </nav>
+      <nav class="footer__col" aria-labelledby="footer-nav-2">
+        <h2 id="footer-nav-2" class="footer__title">Legal</h2>
+        <ul class="footer__links">
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Términos</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </nav>
+      <section class="footer__col">
+        <h2 class="footer__title">Suscríbete</h2>
+        <form class="footer__form" action="#" method="post">
+          <label class="sr-only" for="email">Correo electrónico</label>
+          <input id="email" name="email" type="email" placeholder="tu@correo.com" required />
+          <button class="btn btn--primary">Enviar</button>
+        </form>
+      </section>
+    </div>
+    <div class="footer__bar">
+      <div class="container footer__bar-inner">
+        <small>&copy; <span id="year"></span> CENSO RURAL. Todos los derechos reservados.</small>
+        <button class="btn btn--ghost" id="toggle-theme" type="button" aria-pressed="false">Modo oscuro</button>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
