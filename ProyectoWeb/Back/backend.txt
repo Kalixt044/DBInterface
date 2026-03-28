@@ -1,0 +1,354 @@
+Descripción del Archivo form.html
+
+He analizado el archivo desde el repositorio. Se trata de una interfaz de formularios dinámicos para CRUD (Create, Read, Update, Delete) enfocado en operaciones de inserción y edición de registros.
+Características Principales:
+
+    Formularios Dinámicos:
+        Generación automática de formularios basada en estructura de tabla
+        Campos input según tipos de datos (text, number, date, textarea, select)
+        Validación frontend en tiempo real
+
+    Operaciones CRUD:
+        CREATE: Insertar nuevo registro
+        READ: Cargar datos existentes para editar
+        UPDATE: Modificar registro
+        DELETE: Eliminar registro
+
+    Tecnologías Frontend:
+        Bootstrap 5 + jQuery
+        SweetAlert2 para notificaciones
+        Select2 para dropdowns mejorados
+        Validación HTML5 nativa
+
+    Endpoints API Requeridos (basados en AJAX calls):
+
+GET  /api/table/:name/structure     # Estructura de tabla (campos, tipos)
+GET  /api/table/:name               # Lista de registros (con paginación)
+GET  /api/table/:name/:id           # Registro específico por ID
+POST /api/table/:name/insert        # Insertar nuevo registro
+PUT  /api/table/:name/:id           # Actualizar registro
+DELETE /api/table/:name/:id         # Eliminar registro
+
+Plan para Backend Python + SQLite (CRUD Completo)
+🏗️ Arquitectura
+
+Proyecto/
+├── app/
+│   ├── main.py
+│   ├── services/
+│   │   └── database.py
+│   ├── routes/
+│   │   └── crud.py
+│   └── models/
+│       └── table_schema.py
+├── database.db
+├── init_db.py
+├── requirements.txt
+└── run.py
+
+1. requirements.txt
+
+txt
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-multipart==0.0.6
+
+2. Motor SQLite Avanzado (CRUD)
+
+python
+# app/services/database.py
+import sqlite3
+from pathlib import Path
+from typing import List, Dict, Any, Optional, Union
+from pydantic import BaseModel
+import json
+
+class SQLiteCRUDService:
+    def __init__(self, db_path: Path):
+        self.db_path = db_path
+        self._init_db()
+    
+    def _get_connection(self):
+        conn = sqlite3.connect(self.db_path, check_same_thread=False)
+        conn.row_factory = sqlite3.Row
+        return conn
+    
+    def _init_db(self):
+        """Crear DB y tablas de ejemplo"""
+        if not self.db_path.exists():
+            conn = self._get_connection()
+            # Tablas de ejemplo para testing
+            conn.executescript("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT UNIQUE,
+                    age INTEGER,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+                
+                CREATE TABLE IF NOT EXISTS products (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    price REAL CHECK(price > 0),
+                    category TEXT,
+                    in_stock BOOLEAN DEFAULT 1
+                );
+                
+                INSERT OR IGNORE INTO users (name, email, age) 
+                VALUES ('Juan Pérez', 'juan@test.com', 28),
+                       ('María López', 'maria@test.com', 34);
+                       
+                INSERT OR IGNORE INTO products (name, price, category) 
+                VALUES ('Laptop Dell', 899.99, 'Electrónicos'),
+                       ('Mouse Logitech', 29.99, 'Electrónicos');
+            """)
+            conn.commit()
+            conn.close()
+    
+    def get_tables(self) -> List[str]:
+        """Listar tablas"""
+        conn = self._get_connection()
+        cursor = conn.execute("""
+            SELECT name FROM sqlite_master 
+            WHERE type='table' AND name NOT LIKE 'sqlite_%'
+        """)
+        tables = [row['name'] for row in cursor.fetchall()]
+        conn.close()
+        return tables
+    
+    def get_table_structure(self, table_name: str) -> List[Dict]:
+        """Estructura de tabla para formularios"""
+        conn = self._get_connection()
+        cursor = conn.execute("""
+            PRAGMA table_info({table})
+        """.format(table=table_name))
+        
+        columns = []
+        for row in cursor.fetchall():
+            col = dict(row)
+            # Mapeo para frontend
+            col['field_type'] = self._map_sql_type(col['type'])
+            col['required'] = col['notnull'] == 1 and col['pk'] == 0
+            col['is_pk'] = col['pk'] == 1
+            col['default'] = col['dflt_value']
+            columns.append(col)
+        
+        conn.close()
+        return [c for c in columns if not c['is_pk']]  # Excluir PK del form
+    
+    def _map_sql_type(self, sql_type: str) -> str:
+        """Convertir tipos SQLite a HTML inputs"""
+        sql_type = sql_type.upper()
+        if 'INT' in sql_type or 'INTEGER' in sql_type:
+            return 'number'
+        elif 'REAL' in sql_type or 'FLOAT' in sql_type or 'DOUBLE' in sql_type:
+            return 'number'
+        elif 'TEXT' in sql_type and 'LONGTEXT' not in sql_type:
+            return 'text'
+        elif 'DATE' in sql_type or 'TIME' in sql_type:
+            return 'date'
+        elif 'BOOLEAN' in sql_type:
+            return 'checkbox'
+        else:
+            return 'text'
+    
+    def get_table_records(self, table_name: str, page: int = 1, limit: int = 20) -> Dict:
+        """Lista paginada de registros"""
+        offset = (page - 1) * limit
+        conn = self._get_connection()
+        
+        # Total count
+        cursor = conn.execute("SELECT COUNT(*) as total FROM {table}".format(table=table_name))
+        total = cursor.fetchone()['total']
+        
+        # Records paginados
+        cursor = conn.execute("""
+            SELECT * FROM {table} 
+            ORDER BY id DESC 
+            LIMIT ? OFFSET ?
+        """.format(table=table_name), (limit, offset))
+        
+        records = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        
+        return {"records": records, "total": total, "page": page, "limit": limit}
+    
+    def get_record(self, table_name: str, record_id: int) -> Optional[Dict]:
+        """Registro específico por ID"""
+        conn = self._get_connection()
+        cursor = conn.execute("SELECT * FROM {table} WHERE id = ?".format(table=table_name), (record_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return dict(row) if row else None
+    
+    def insert_record(self, table_name: str, data: Dict) -> int:
+        """Insertar nuevo registro"""
+        columns = list(data.keys())
+        placeholders = ','.join(['?' for _ in columns])
+        values = tuple(data.values())
+        
+        conn = self._get_connection()
+        cursor = conn.execute("""
+            INSERT INTO {table} ({cols}) VALUES ({placeholders})
+        """.format(table=table_name, cols=','.join(columns), placeholders=placeholders), values)
+        
+        new_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+        return new_id
+    
+    def update_record(self, table_name: str, record_id: int, data: Dict) -> bool:
+        """Actualizar registro"""
+        if not data:
+            return False
+        
+        set_clause = ', '.join([f"{k}=?" for k in data.keys()])
+        values = tuple(data.values()) + (record_id,)
+        
+        conn = self._get_connection()
+        cursor = conn.execute("""
+            UPDATE {table} SET {set_clause} WHERE id = ?
+        """.format(table=table_name, set_clause=set_clause), values)
+        
+        result = cursor.rowcount > 0
+        conn.commit()
+        conn.close()
+        return result
+    
+    def delete_record(self, table_name: str, record_id: int) -> bool:
+        """Eliminar registro"""
+        conn = self._get_connection()
+        cursor = conn.execute("DELETE FROM {table} WHERE id = ?".format(table=table_name), (record_id,))
+        result = cursor.rowcount > 0
+        conn.commit()
+        conn.close()
+        return result
+
+# Instancia global
+db_crud = SQLiteCRUDService(Path("database.db"))
+
+3. Rutas CRUD Completas
+
+python
+# app/routes/crud.py
+from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel
+from typing import Optional
+from app.services.database import db_crud
+
+router = APIRouter(prefix="/api", tags=["CRUD"])
+
+class RecordData(BaseModel):
+    # Datos dinámicos del formulario
+    pass
+
+@router.get("/tables")
+async def list_tables():
+    """Listar todas las tablas"""
+    return {"tables": db_crud.get_tables()}
+
+@router.get("/table/{table_name}/structure")
+async def get_table_structure(table_name: str):
+    """Estructura para generar formulario"""
+    structure = db_crud.get_table_structure(table_name)
+    if not structure:
+        raise HTTPException(404, f"Tabla '{table_name}' no encontrada")
+    return {"table": table_name, "fields": structure}
+
+@router.get("/table/{table_name}")
+async def get_table_records(
+    table_name: str,
+    page: int = Query(1, ge=1),
+    limit: int = Query(20, ge=1, le=100)
+):
+    """Lista paginada de registros"""
+    if table_name not in db_crud.get_tables():
+        raise HTTPException(404, f"Tabla no encontrada")
+    
+    return db_crud.get_table_records(table_name, page, limit)
+
+@router.get("/table/{table_name}/{record_id}")
+async def get_record(table_name: str, record_id: int):
+    """Registro específico para editar"""
+    record = db_crud.get_record(table_name, record_id)
+    if not record:
+        raise HTTPException(404, "Registro no encontrado")
+    return record
+
+@router.post("/table/{table_name}/insert")
+async def insert_record(table_name: str, data: dict):
+    """Insertar nuevo registro"""
+    try:
+        new_id = db_crud.insert_record(table_name, data)
+        return {"success": True, "id": new_id, "message": "Registro creado exitosamente"}
+    except Exception as e:
+        raise HTTPException(400, f"Error insertando: {str(e)}")
+
+@router.put("/table/{table_name}/{record_id}")
+async def update_record(table_name: str, record_id: int, data: dict):
+    """Actualizar registro"""
+    success = db_crud.update_record(table_name, record_id, data)
+    if not success:
+        raise HTTPException(404, "No se pudo actualizar el registro")
+    return {"success": True, "message": "Registro actualizado"}
+
+@router.delete("/table/{table_name}/{record_id}")
+async def delete_record(table_name: str, record_id: int):
+    """Eliminar registro"""
+    success = db_crud.delete_record(table_name, record_id)
+    if not success:
+        raise HTTPException(404, "Registro no encontrado")
+    return {"success": True, "message": "Registro eliminado"}
+
+4. Main App
+
+python
+# app/main.py
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.routes.crud import router as crud_router
+
+app = FastAPI(title="DB CRUD API - SQLite")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(crud_router)
+
+@app.get("/")
+async def root():
+    return {"message": "DB CRUD API funcionando", "docs": "/docs"}
+
+5. Ejecución
+
+python
+# run.py
+import uvicorn
+from app.main import app
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+
+🚀 Pasos Rápidos
+
+bash
+1. mkdir db-crud-api && cd db-crud-api
+2. pip install -r requirements.txt
+3. # Copiar archivos de arriba
+4. python run.py
+5. Abrir http://localhost:8000/docs
+6. Probar con frontend form.html
+
+Endpoints Listos para form.html ✅
+
+    GET /api/table/users/structure → Campos del formulario
+    POST /api/table/users/insert → Crear usuario
+    PUT /api/table/users/5 → Editar usuario ID 5
+    DELETE /api/table/users/5 → Borrar usuario ID 5
