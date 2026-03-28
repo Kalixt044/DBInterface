@@ -1,8 +1,9 @@
+# app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.crud import router as crud_router
 
-app = FastAPI(title="DB CRUD API - SQLite")
+app = FastAPI(title="DB CRUD API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,4 +17,4 @@ app.include_router(crud_router)
 
 @app.get("/")
 async def root():
-    return {"message": "DB CRUD API funcionando", "docs": "/docs"}
+    return {"message": "🚀 API funcionando", "docs": "/docs"}
