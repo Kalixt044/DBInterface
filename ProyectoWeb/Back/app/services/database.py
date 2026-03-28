@@ -13,32 +13,39 @@ class SQLiteCRUDService:
         conn.row_factory = sqlite3.Row
         return conn
     
-    def _init_db(self):
-        if not self.db_path.exists():
-            conn = self._get_connection()
-            conn.executescript("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    email TEXT UNIQUE,
-                    age INTEGER,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                );
-                CREATE TABLE IF NOT EXISTS products (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    price REAL CHECK(price > 0),
-                    category TEXT,
-                    in_stock BOOLEAN DEFAULT 1
-                );
-                INSERT OR IGNORE INTO users (name, email, age) 
-                VALUES ('Juan Pérez', 'juan@test.com', 28),
-                       ('María López', 'maria@test.com', 34);
-                INSERT OR IGNORE INTO products (name, price, category) 
-                VALUES ('Laptop Dell', 899.99, 'Electrónicos');
-            """)
-            conn.commit()
-            conn.close()
+    # app/services/database.py - SECCIÓN _init_db() MODIFICADA
+def _init_db(self):
+    """Inicializar DB con estructura del formulario"""
+    if not self.db_path.exists():
+        conn = self._get_connection()
+        conn.executescript("""
+            -- ✅ TABLA USERS adaptada al formulario
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL,
+                apellido TEXT NOT NULL,
+                email TEXT UNIQUE NOT NULL,
+                telefono TEXT,
+                edad INTEGER CHECK(edad >= 0),
+                fecha_nacimiento DATE,
+                ciudad TEXT,
+                pais TEXT,
+                activo BOOLEAN DEFAULT 1,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            
+            -- 🗑️ Eliminar tabla antigua si existe (una sola vez)
+            -- DROP TABLE IF EXISTS users;
+            
+            -- 📊 Datos de ejemplo que coinciden con el formulario
+            INSERT OR IGNORE INTO users (nombre, apellido, email, telefono, edad, fecha_nacimiento, ciudad, pais, activo) 
+            VALUES 
+                ('Juan', 'Pérez', 'juan@test.com', '+123456789', 28, '1995-03-15', 'Bogotá', 'Colombia', 1),
+                ('María', 'López', 'maria@test.com', '+987654321', 34, '1989-07-22', 'Medellín', 'Colombia', 1),
+                ('Carlos', 'García', 'carlos@test.com', '+555123456', 25, '1998-11-10', 'Lima', 'Perú', 0);
+        """)
+        conn.commit()
+        conn.close()
     
     def get_tables(self) -> List[str]:
         conn = self._get_connection()
