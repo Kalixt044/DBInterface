@@ -1,26 +1,6 @@
-***...............***********.............*.********.................*************..........******
-Back/
-├── run.py                 # Opcional: punto de entrada alternativo
-├── app/
-│   ├── __init__.py
-│   ├── main.py            # Tu aplicación FastAPI
-│   ├── models/            # Modelos de base de datos
-│   │   ├── __init__.py
-│   │   ├── user.py
-│   │   └── product.py
-│   ├── schemas/           # Esquemas Pydantic (validación)
-│   │   ├── __init__.py
-│   │   ├── user.py
-│   │   └── product.py
-│   ├── routes/            # Endpoints de la API
-│   │   ├── __init__.py
-│   │   └── crud.py
-│   └── services/          # Lógica de negocio y DB
-│       ├── __init__.py
-│       └── database.py    # Tu archivo con tablas user y products
+uvicorn app.main:app --reload 
 
-.**********...........*******........**********..........**********..........*********......**.*.....
-
+******************////////***********----------********-----
 Descripción del Archivo form.html
 
 He analizado el archivo desde el repositorio. Se trata de una interfaz de formularios dinámicos para CRUD (Create, Read, Update, Delete) enfocado en operaciones de inserción y edición de registros.
@@ -80,8 +60,8 @@ python-multipart==0.0.6
 2. Motor SQLite Avanzado (CRUD)
 
 python
-# app/services/database.py
 
+# app/services/database.py
 import sqlite3
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Union
@@ -257,6 +237,7 @@ db_crud = SQLiteCRUDService(Path("database.db"))
 
 python
 # app/routes/crud.py
+
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from typing import Optional
@@ -330,6 +311,7 @@ async def delete_record(table_name: str, record_id: int):
 
 python
 # app/main.py
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.crud import router as crud_router
@@ -354,6 +336,7 @@ async def root():
 
 python
 # run.py
+
 import uvicorn
 from app.main import app
 
@@ -376,20 +359,11 @@ Endpoints Listos para form.html ✅
     POST /api/table/users/insert → Crear usuario
     PUT /api/table/users/5 → Editar usuario ID 5
     DELETE /api/table/users/5 → Borrar usuario ID 5
-...........****************.........**************..............************............................
 
-cd ProyectoWeb/Back
+    
+*************************----------------------*********************-------------------*****************
+ajustes la base de datos a los campos que se requieren desde : 
+Primer Nombres	Segundo nombre	Primer Apellidos	Segundo Apellido	Documento	Numero de Identificacion	Domicilio	Fecha de nacimiento	Edad	Sexo	Numero Celular	Direccion	Barrio	Email
 
-# Crear estructura completa
-mkdir -p app/services
-mkdir -p app/routes
-mkdir -p app/models
-
-# Archivos __init__.py obligatorios
-touch app/__init__.py
-touch app/services/__init__.py
-touch app/routes/__init__.py
-touch app/models/__init__.py
-
-ejecuta: 
-uvicorn app.main:app --reload
+ARchivo form
+https://github.com/Kalixt044/DBInterface/blob/main/ProyectoWeb/Front/form.html
