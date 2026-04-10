@@ -1,161 +1,289 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Formulario de Registro</title>
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Dinámico - DB CRUD</title>
+
     <link rel="stylesheet"  href="./CSS/form.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Formulario de Registro</h1>
-
-    <form id="form-persona" novalidate>
-      <div class="grid">
-        <!-- Identificación -->
-        <div>
-          <label for="documento">Documento <span aria-hidden="true">*</span></label>
-          <select id="documento" name="documento" required>
-            <option value="" selected disabled>Selecciona…</option>
-            <option value="CC">CC</option>
-                 <option value="TI">TI</option>
-          </select>
-          <p class="help">Tipo de documento.</p>
+    <div class="container">
+        <h1>📝 Formulario Dinámico CRUD</h1>
+        
+        <!-- Mensajes -->
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <!-- Formulario dinámico -->
+        <form id="dynamicForm" class="form-grid">
+            <div>
+                <label for="primer_nombres">Primer Nombres *</label>
+                <input type="text" id="primer_nombres" name="primer_nombres" required>
+            </div>
+            <div>
+                <label for="segundo_nombre">Segundo Nombre</label>
+                <input type="text" id="segundo_nombre" name="segundo_nombre">
+            </div>
+            <div>
+                <label for="primer_apellido">Primer Apellido *</label>
+                <input type="text" id="primer_apellido" name="primer_apellido" required>
+            </div>
+            <div>
+                <label for="segundo_apellido">Segundo Apellido</label>
+                <input type="text" id="segundo_apellido" name="segundo_apellido">
+            </div>
+            <div>
+                <label for="documento">Documento *</label>
+                <select id="documento" name="documento" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="TI">Tarjeta de Identidad</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PA">Pasaporte</option>
+                </select>
+            </div>
+            <div>
+                <label for="numero_identificacion">Número Identificación *</label>
+                <input type="text" id="numero_identificacion" name="numero_identificacion" required>
+            </div>
+            <div>
+                <label for="domicilio">Domicilio</label>
+                <input type="text" id="domicilio" name="domicilio">
+            </div>
+            <div>
+                <label for="fecha_nacimiento">Fecha Nacimiento</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+            </div>
+            <div>
+                <label for="edad">Edad</label>
+                <input type="number" id="edad" name="edad" min="0" max="120">
+            </div>
+            <div>
+                <label for="sexo">Sexo</label>
+                <select id="sexo" name="sexo">
+                    <option value="">Seleccionar...</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="O">Otro</option>
+                </select>
+            </div>
+            <div>
+                <label for="numero_celular">Número Celular</label>
+                <input type="tel" id="numero_celular" name="numero_celular">
+            </div>
+            <div>
+                <label for="direccion">Dirección *</label>
+                <input type="text" id="direccion" name="direccion" required>
+            </div>
+            <div>
+                <label for="barrio">Barrio</label>
+                <input type="text" id="barrio" name="barrio">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            
+            <!-- Botones -->
+            <div style="grid-column: 1 / -1; text-align: center; padding-top: 20px;">
+                <button type="submit" class="btn btn-success" id="btnGuardar">💾 Guardar</button>
+                <button type="button" class="btn" id="btnLimpiar">🧹 Limpiar</button>
+                <button type="button" class="btn" id="btnListar">📋 Listar</button>
+            </div>
+        </form>
+        
+        <!-- Lista de registros -->
+        <div id="records" style="display: none;">
+            <h3>📊 Registros <span id="totalRecords"></span></h3>
+            <div id="recordsList"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" id="btnAnterior">⬅️ Anterior</button>
+                <span id="paginationInfo"></span>
+                <button class="btn" id="btnSiguiente">Siguiente ➡️</button>
+            </div>
         </div>
+    </div>
 
-        <div>
-          <label for="identificacion">Número de Identificación <span aria-hidden="true">*</span></label>
-          <input id="identificacion" name="identificacion" inputmode="numeric" pattern="[0-9]{5,20}" required
-                 placeholder="Ej: 1234567890" aria-describedby="id-help" />
-          <p id="id-help" class="help">Solo números, entre 5 y 20 dígitos.</p>
-        </div>
-
-        <!-- Nombres y apellidos -->
-        <div>
-          <label for="primerNombre">Primer Nombre <span aria-hidden="true">*</span></label>
-          <input id="primerNombre" name="primerNombre" required placeholder="Ej: Ana" />
-        </div>
-
-        <div>
-          <label for="segundoNombre">Segundo Nombre</label>
-          <input id="segundoNombre" name="segundoNombre" placeholder="Opcional" />
-        </div>
-
-        <div>
-          <label for="primerApellido">Primer Apellido <span aria-hidden="true">*</span></label>
-          <input id="primerApellido" name="primerApellido" required placeholder="Ej: Pérez" />
-        </div>
-
-        <div>
-          <label for="segundoApellido">Segundo Apellido</label>
-          <input id="segundoApellido" name="segundoApellido" placeholder="Opcional" />
-        </div>
-
-        <!-- Datos de contacto -->
-        <div class="span-2">
-          <label for="domicilio">Domicilio</label>
-          <input id="domicilio" name="domicilio" placeholder="Apartamento / Interior / Casa" />
-        </div>
-
-        <div>
-          <label for="direccion">Dirección <span aria-hidden="true">*</span></label>
-          <input id="direccion" name="direccion" required placeholder="Ej: Cra 45 # 72-15" />
-        </div>
-
-        <div>
-          <label for="barrio">Barrio</label>
-          <input id="barrio" name="barrio" placeholder="Ej: El Prado" />
-        </div>
-
-        <div>
-          <label for="celular">Número Celular <span aria-hidden="true">*</span></label>
-          <input id="celular" name="celular" type="tel" inputmode="numeric" pattern="[0-9]{7,15}" required
-                 placeholder="Ej: 3001234567" aria-describedby="cel-help" />
-          <p id="cel-help" class="help">Solo números (7–15 dígitos).</p>
-        </div>
-
-        <div>
-          <label for="email">Email <span aria-hidden="true">*</span></label>
-          <input id="email" name="email" type="email" required placeholder="tu@correo.com" />
-        </div>
-
-        <div>
-          <label for="fechaNac">Fecha de nacimiento <span aria-hidden="true">*</span></label>
-          <input id="fechaNac" name="fechaNac" type="date" required max="" />
-        </div>
-
-
-
-        <div>
-          <label for="sexo">Sexo <span aria-hidden="true">*</span></label>
-          <select id="sexo" name="sexo" required>
-            <option value="" selected disabled>Selecciona…</option>
-            <option value="F">Femenino</option>
-            <option value="M">Masculino</option>
-            <option value="X">Otro / Prefiero no decir</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="btn btn--primary" type="submit">Enviar</button>
-        <button class="btn" type="reset">Limpiar</button>
-      </div>
-
-      <p id="form-status" class="status" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-
-  <script>
-    // Máxima fecha = hoy para fecha de nacimiento
-    const fechaNac = document.getElementById('fechaNac');
-    const edad = document.getElementById('edad');
-    const statusEl = document.getElementById('form-status');
-
-    (function setMaxDateToday(){
-      const today = new Date();
-      const y = today.getFullYear();
-      const m = String(today.getMonth()+1).padStart(2,'0');
-      const d = String(today.getDate()).padStart(2,'0');
-      const iso = `${y}-${m}-${d}`;
-      if (fechaNac) fechaNac.max = iso;
-    })();
-
-    // Cálculo de edad
-    function calcularEdad(fechaISO){
-      const hoy = new Date();
-      const nac = new Date(fechaISO);
-      let e = hoy.getFullYear() - nac.getFullYear();
-      const m = hoy.getMonth() - nac.getMonth();
-      if (m < 0 || (m === 0 && hoy.getDate() < nac.getDate())) e--;
-      return e;
-    }
-    fechaNac?.addEventListener('change', () => {
-      if (fechaNac.value) {
-        const e = calcularEdad(fechaNac.value);
-        edad.value = isFinite(e) && e >= 0 ? e : '';
-      } else {
-        edad.value = '';
-      }
-    });
-
-    // Validación básica y mensaje de estado
-    const form = document.getElementById('form-persona');
-    form?.addEventListener('submit', (ev) => {
-      statusEl.textContent = '';
-      const ok = form.checkValidity();
-      if (!ok) {
-        ev.preventDefault();
-        form.reportValidity();
-        statusEl.innerHTML = 'Por favor, completa los campos obligatorios marcados con *.';
-        statusEl.classList.add('error');
-      } else {
-        // Aquí podrías enviar con fetch() a tu backend
-        statusEl.textContent = 'Formulario enviado correctamente.';
-        statusEl.classList.remove('error');
-      }
-    });
-  </script>
+    <script>
+        //  CONFIGURACIÓN BACKEND
+        const API_BASE = 'http://localhost:8000/api';  // Connecion BACKEND
+        const TABLE_NAME = 'personas';  //  Tabla del formulario
+        
+        let currentPage = 1;
+        let totalRecords = 0;
+        let editingId = null;
+        let tableStructure = [];
+        
+        const HEADERS = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        };
+        
+        //  FUNCIONES API
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            const url = `${API_BASE}/${endpoint}`;
+            showStatus('loading', '⏳ Conectando...');
+            
+            try {
+                const options = { headers: HEADERS };
+                if (data) options.body = JSON.stringify(data);
+                if (method !== 'GET') options.method = method;
+                
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || error.error || `HTTP ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                showStatus('error', `❌ Error: ${error.message}`);
+                throw error;
+            }
+        }
+        
+        //  CARGAR ESTRUCTURA TABLA (campos dinámicos)
+        async function loadTableStructure() {
+            try {
+                const data = await apiCall(`table/${TABLE_NAME}/structure`);
+                tableStructure = data.fields;
+                console.log('✅ Estructura cargada:', tableStructure.map(f => f.name));
+            } catch (error) {
+                console.error('Error estructura:', error);
+            }
+        }
+        
+        //  GUARDAR/EDITAR
+        document.getElementById('dynamicForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = Object.fromEntries(new FormData(e.target));
+            
+            // Checkbox handling
+            const activo = document.querySelector('input[name="activo"]')?.checked || true;
+            formData.activo = activo;
+            
+            try {
+                if (editingId) {
+                    // Editar
+                    await apiCall(`table/${TABLE_NAME}/${editingId}`, 'PUT', formData);
+                    showStatus('success', '✅ Registro actualizado');
+                } else {
+                    // Nuevo
+                    const result = await apiCall(`table/${TABLE_NAME}/insert`, 'POST', formData);
+                    showStatus('success', `✅ Creado con ID: ${result.id}`);
+                }
+                document.getElementById('dynamicForm').reset();
+                editingId = null;
+                document.getElementById('btnGuardar').textContent = '💾 Guardar';
+                loadRecords();
+            } catch (error) {
+                console.error('Error guardar:', error);
+            }
+        });
+        
+        // 📋 LISTAR REGISTROS
+        async function loadRecords(page = 1) {
+            try {
+                currentPage = page;
+                const data = await apiCall(`table/${TABLE_NAME}?page=${page}&limit=10`);
+                totalRecords = data.total;
+                renderRecords(data.records);
+                updatePagination();
+                document.getElementById('records').style.display = 'block';
+            } catch (error) {
+                console.error('Error listar:', error);
+            }
+        }
+        
+        function renderRecords(records) {
+            const container = document.getElementById('recordsList');
+            container.innerHTML = records.map(record => `
+                <div class="record-card">
+                    <h4>${record.primer_nombres} ${record.primer_apellido}</h4>
+                    <p><strong>Doc:</strong> ${record.documento} ${record.numero_identificacion}</p>
+                    <p><strong>Email:</strong> ${record.email || 'N/A'}</p>
+                    <p><strong>Tel:</strong> ${record.numero_celular || 'N/A'}</p>
+                    <p><strong>Dirección:</strong> ${record.direccion}, ${record.barrio}</p>
+                    <div style="margin-top: 10px;">
+                        <button class="btn" onclick="editRecord(${record.id})">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="deleteRecord(${record.id})">🗑️ Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        //  EDITAR
+        async function editRecord(id) {
+            try {
+                const record = await apiCall(`table/${TABLE_NAME}/${id}`);
+                editingId = id;
+                document.getElementById('btnGuardar').textContent = '💾 Actualizar';
+                
+                // Llenar formulario
+                Object.keys(record).forEach(key => {
+                    const input = document.querySelector(`[name="${key}"]`);
+                    if (input) {
+                        if (input.type === 'checkbox') {
+                            input.checked = record[key];
+                        } else {
+                            input.value = record[key] || '';
+                        }
+                    }
+                });
+                
+                showStatus('success', '✏️ Cargado para editar');
+                document.getElementById('dynamicForm').scrollIntoView();
+            } catch (error) {
+                console.error('Error editar:', error);
+            }
+        }
+        
+        //  ELIMINAR
+        async function deleteRecord(id) {
+            if (!confirm('¿Eliminar este registro?')) return;
+            
+            try {
+                await apiCall(`table/${TABLE_NAME}/${id}`, 'DELETE');
+                showStatus('success', '🗑️ Eliminado correctamente');
+                loadRecords(currentPage);
+            } catch (error) {
+                console.error('Error eliminar:', error);
+            }
+        }
+        
+        // UI Helpers
+        function showStatus(type, message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            setTimeout(() => status.style.display = 'none', 5000);
+        }
+        
+        function updatePagination() {
+            document.getElementById('totalRecords').textContent = `(${totalRecords})`;
+            document.getElementById('paginationInfo').textContent = `Página ${currentPage}`;
+            
+            document.getElementById('btnAnterior').disabled = currentPage <= 1;
+            document.getElementById('btnSiguiente').disabled = currentPage * 10 >= totalRecords;
+        }
+        
+        //  EVENTOS BOTONES
+        document.getElementById('btnLimpiar').onclick = () => {
+            document.getElementById('dynamicForm').reset();
+            editingId = null;
+            document.getElementById('btnGuardar').textContent = '💾 Guardar';
+        };
+        
+        document.getElementById('btnListar').onclick = () => loadRecords(1);
+        document.getElementById('btnAnterior').onclick = () => loadRecords(currentPage - 1);
+        document.getElementById('btnSiguiente').onclick = () => loadRecords(currentPage + 1);
+        
+        // 🚀 INICIALIZAR
+        window.onload = async () => {
+            await loadTableStructure();
+            showStatus('success', '✅ Conectado al backend');
+            loadRecords(1);
+        };
+    </script>
 </body>
 </html>
