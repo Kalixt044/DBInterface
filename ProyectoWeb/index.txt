@@ -1,8 +1,0 @@
-Integracion de vite react para el front del proyecto censo rural, consevando los endpoints y 
-particularidades del proyecto ya desarrollado
-
-Backend:
-https://github.com/Kalixt044/DBInterface/tree/main/ProyectoWeb/Back
-
-Frontend:
-https://github.com/Kalixt044/DBInterface/tree/main/ProyectoWeb/Front
