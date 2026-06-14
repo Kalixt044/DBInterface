@@ -8,6 +8,23 @@ import { TABLE_NAME } from './constants/apiConfig';
 import { apiCall } from './utils/api';
 import { validateForm } from './utils/validation';
 
+const computeAge = (fechaNacimiento) => {
+  if (!fechaNacimiento) return null;
+  const birthDate = new Date(fechaNacimiento);
+  if (Number.isNaN(birthDate.getTime())) return null;
+
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  const dayDiff = today.getDate() - birthDate.getDate();
+
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+    age -= 1;
+  }
+
+  return age >= 0 ? age : null;
+};
+
 function App() {
   const [page, setPage] = useState('home');
   const [formValues, setFormValues] = useState(initialForm);
@@ -22,7 +39,12 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
+    const submissionData = {
+      ...formValues,
+      edad: computeAge(formValues.fecha_nacimiento)
+    };
+
     const validation = validateForm(formValues);
     if (!validation.isValid) {
       setStatus(validation.message);
@@ -32,19 +54,19 @@ function App() {
     try {
       if (editingIndex !== null && records[editingIndex]?.id) {
         const recordToUpdate = records[editingIndex];
-        await apiCall(`table/${TABLE_NAME}/${recordToUpdate.id}`, 'PUT', formValues);
+        await apiCall(`table/${TABLE_NAME}/${recordToUpdate.id}`, 'PUT', submissionData);
         setRecords((current) =>
           current.map((record, index) =>
-            index === editingIndex ? { ...record, ...formValues } : record
+            index === editingIndex ? { ...record, ...submissionData } : record
           )
         );
         setStatus('Registro actualizado en backend.');
         setEditingIndex(null);
       } else {
-        const result = await apiCall(`table/${TABLE_NAME}/insert`, 'POST', formValues);
+        const result = await apiCall(`table/${TABLE_NAME}/insert`, 'POST', submissionData);
         setRecords((current) => [
           ...current,
-          { ...formValues, id: result.id ?? Date.now() }
+          { ...submissionData, id: result.id ?? Date.now() }
         ]);
         setStatus('Registro guardado en backend.');
       }

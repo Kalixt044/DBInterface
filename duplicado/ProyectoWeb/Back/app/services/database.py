@@ -1,6 +1,5 @@
 # app/services/database.py - VERSIÓN FINAL
 import sqlite3
-from datetime import date, datetime
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
@@ -10,10 +9,8 @@ class SQLiteCRUDService:
         self._init_db()
     
     def _get_connection(self):
-        conn = sqlite3.connect(self.db_path, check_same_thread=False, timeout=30)
+        conn = sqlite3.connect(self.db_path, check_same_thread=False)
         conn.row_factory = sqlite3.Row
-        conn.execute("PRAGMA busy_timeout = 30000")
-        conn.execute("PRAGMA journal_mode = WAL")
         return conn
     
     def _init_db(self):
@@ -86,29 +83,6 @@ class SQLiteCRUDService:
         if 'DATE' in sql_type: return 'date'
         if 'BOOLEAN' in sql_type: return 'checkbox'
         return 'text'
-
-    def _compute_age(self, fecha_nacimiento: Optional[str]) -> Optional[int]:
-        if not fecha_nacimiento:
-            return None
-        try:
-            birth_date = datetime.fromisoformat(fecha_nacimiento).date()
-        except ValueError:
-            try:
-                birth_date = datetime.strptime(fecha_nacimiento, '%Y-%m-%d').date()
-            except ValueError:
-                return None
-
-        today = date.today()
-        age = today.year - birth_date.year
-        if (today.month, today.day) < (birth_date.month, birth_date.day):
-            age -= 1
-
-        return age if age >= 0 else None
-
-    def _prepare_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        prepared = dict(data)
-        prepared['edad'] = self._compute_age(prepared.get('fecha_nacimiento'))
-        return prepared
     
     # Métodos CRUD (sin cambios)
     def get_table_records(self, table_name: str, page: int = 1, limit: int = 20) -> Dict:
@@ -129,7 +103,6 @@ class SQLiteCRUDService:
         return dict(row) if row else None
     
     def insert_record(self, table_name: str, data: Dict) -> int:
-        data = self._prepare_data(data)
         columns = list(data.keys())
         placeholders = ','.join(['?' for _ in columns])
         values = tuple(data.values())
@@ -142,7 +115,6 @@ class SQLiteCRUDService:
     
     def update_record(self, table_name: str, record_id: int, data: Dict) -> bool:
         if not data: return False
-        data = self._prepare_data(data)
         set_clause = ', '.join([f"{k}=?" for k in data.keys()])
         values = tuple(data.values()) + (record_id,)
         conn = self._get_connection()

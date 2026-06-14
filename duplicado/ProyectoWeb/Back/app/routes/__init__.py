@@ -1,23 +1,9 @@
 # app/routes/crud.py - COMPLETO
-from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from app.services.database import db_crud
 
 router = APIRouter(prefix="/api", tags=["CRUD"])
-
-async def _parse_request_data(request: Request) -> dict:
-    try:
-        data = await request.json()
-        if not isinstance(data, dict):
-            raise ValueError("JSON body must be an object")
-    except ValueError:
-        form = await request.form()
-        data = dict(form)
-
-    if isinstance(data, dict) and "data" in data and isinstance(data["data"], dict):
-        data = data["data"]
-
-    return data
 
 @router.get("/tables")
 async def list_tables():
@@ -52,12 +38,8 @@ async def get_record(table_name: str, record_id: int):
     return record
 
 @router.post("/table/{table_name}/insert")
-async def insert_record(table_name: str, request: Request):
+async def insert_record(table_name: str, data: dict):
     """➕ Insertar registro"""
-    data = await _parse_request_data(request)
-    if not data:
-        raise HTTPException(400, "No se recibieron datos para insertar")
-
     try:
         new_id = db_crud.insert_record(table_name, data)
         return {"success": True, "id": new_id, "message": "Creado"}
@@ -65,12 +47,8 @@ async def insert_record(table_name: str, request: Request):
         raise HTTPException(400, f"Error: {str(e)}")
 
 @router.put("/table/{table_name}/{record_id}")
-async def update_record(table_name: str, record_id: int, request: Request):
+async def update_record(table_name: str, record_id: int, data: dict):
     """🔄 Actualizar registro"""
-    data = await _parse_request_data(request)
-    if not data:
-        raise HTTPException(400, "No se recibieron datos para actualizar")
-
     success = db_crud.update_record(table_name, record_id, data)
     if not success:
         raise HTTPException(404, "No encontrado")
