@@ -1,0 +1,279 @@
+Realiza plan de pruebas: 
+Realiza plan pruebas de software -
+ GA9-220501096-AA1-EV02
+
+Criterios de evaluación:
+• Diseña casos de prueba para comprobar la funcionalidad del software especificada en los
+casos de uso.
+• Define el ambiente de pruebas de acuerdo con las condiciones del entorno de producción.
+• Realiza pruebas al software de acuerdo con el plan de pruebas.
+• Documenta las pruebas realizadas para mantener la trazabilidad en el comportamiento del software.
+2. Lista de chequeo
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+1. Realiza el plan de pruebas. 20%
+2. Analizó los requerimientos y las funcionalidades existentes.10%
+3. Definió estrategias y entornos de trabajo. 20%
+4. Entregó el modelo de los artefactos que necesitará para
+llevar el registro en las pruebas. 15%
+5. Hace un listado de la o las posibles aplicaciones que utilizará para realizar las pruebas del software. 10%
+6. Identificó los riesgos y propuso contingencias. 10%
+7. Realizó el trabajo con las normas básicas de presentación de un documento escrito. 15%
+
+
+------------------*****-----------*****------
+
+Diseño y diligenciamiento de instrumentos para documentar procesos de calidad del software-GA11-220501098-AA1-EV03
+
+Criterios de Evaluación:
+Registra las actividades realizadas en el proceso personal de desarrollo de software de acuerdo
+con las formas dispuestas en el libro de trabajo.
+Diligencia la documentación de procesos de aseguramiento de la calidad siguiendo parámetros
+establecidos.
+2. LISTA DE CHEQUEO
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+
+1. Registró las actividades realizadas en el proceso personal de desarrollo de software en los formatos anteriormente diseñados. 50%
+2. Diligenció la documentación de procesos de aseguramiento de la calidad teniendo en cuenta los parámetros establecidos. 30%
+3. Presentó el trabajo siguiendo las normas básicas de
+presentación de un documento “portada, introducción y conclusiones”. 20%
+
+****-*---*--*-*-*-*-*-*-*-***-*-*-*-****----*-*-*
+Bitácoras con los procesos documentados. GA11-220501098-AA1-EV04.
+
+Criterios de Evaluación:
+● Registra las actividades realizadas en el proceso personal de desarrollo de software de
+acuerdo con las formas dispuestas en el libro de trabajo.
+● Diligencia la documentación de procesos de aseguramiento de la calidad siguiendo
+parámetros establecidos.
+2. LISTA DE CHEQUEO
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+1. Realizó la bitácora con los procesos documentales. 50%
+2. Utilizó buenas prácticas de calidad de acuerdo con el referente de los marcos de trabajo. 40%
+3. Presentó el trabajo siguiendo las normas básicas de presentación de un documento “portada, introducción y conclusiones”. 10%
+
+
+**-**---**-*-*-*-*--*-*-*-*-*-**-*-*--*-***-*-*--
+Diseña casos y define el ambiente de pruebas de software
+según proyecto - GA9-220501096-AA2-EV01
+
+Criterios de evaluación:
+• Diseña casos de prueba para comprobar la funcionalidad del software especificada en los
+casos de uso.
+• Define el ambiente de pruebas de acuerdo con las condiciones del entorno de producción.
+2. Lista de chequeo
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+
+1. Diseña los casos de prueba de acuerdo con los lementos a tener en cuenta en la guía Nº 9. 60%
+2. El formato está elaborado en la forma requerida y cuenta con un diseño agradable. 20%
+3. Cumple con todos los requerimientos necesarios para un ambiente de prueba que evalúe todos los requerimientos del software a desarrollar. 20%
+
+**-*-*-*-*-*-*-*-*-*-*-*--*----*-*-*-*-*-*-*-*--*
+Creación de informe con los resultados del comportamiento del
+software.GA11-220501098-AA2-EV01
+
+
+Criterios de Evaluación:
+● Evalúa comportamientos del sistema de acuerdo con los requisitos no funcionales del
+software.
+● Elabora informe de evaluación de la calidad de acuerdo con los resultados de la
+verificación.
+● Crea bitácora de lecciones aprendidas a partir de los resultados de la verificación del
+software.
+2. LISTA DE CHEQUEO
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+
+1. Realizó el documento informe de resultados. 50%
+2. Registró en el documento un resumen con los recursos utilizados. 25%
+3. Utilizó buenas prácticas de calidad de acuerdo con el referente de los marcos de trabajo 15%
+4. Presentó el trabajo siguiendo las normas básicas de presentación de un documento “portada, introducción y conclusiones”.
+10%
+
+
+**-*-*-*-*-*-*-*-*-*-*-*--*----*-*-*-*-*-*-*-*--*---****----****--**----*****-*-*-*-*-*-*-*-*-*-*-*--*----*-*-*-*-*-*-*-*--*---****----****--**----***
+
+
+# Plan de Pruebas — Proyecto Censo Rural
+
+Fecha: 2026-08-30
+
+## Resumen ejecutivo
+- Objetivo: Definir y proveer plantillas y artefactos para ejecutar pruebas en las versiones Web y Escritorio (Python) del proyecto "Censo Rural", cubriendo los criterios de `sem1_mes18.txt`.
+
+## Alcance
+- Web: UI, API/Backend, integración, seguridad, accesibilidad y rendimiento.
+- Escritorio (Python): lógica, persistencia, GUI (si aplica), instalación/packaging y rendimiento.
+
+## Criterios mapeados
+- Diseñar casos de prueba que verifiquen funcionalidades según casos de uso.
+- Definir ambiente de pruebas que refleje condiciones de producción.
+- Ejecutar pruebas conforme al plan y documentar trazabilidad (bitácora, informes).
+- Entregar documentos con formato (portada, introducción, conclusiones).
+
+## Estrategia de pruebas
+- Tipos: Unitarias, Integración, E2E/UI, Rendimiento, Seguridad, Accesibilidad, Regresión.
+- Herramientas recomendadas:
+  - Unit/Integration: `pytest`
+  - Web E2E: Playwright (preferible) o Selenium
+  - Desktop GUI: `pytest-qt`, `PyAutoGUI` o `robotframework` según stack
+  - Performance: Locust o jMeter
+  - Seguridad: Bandit (Python), OWASP ZAP (web)
+  - CI: GitHub Actions / GitLab CI
+
+## Entornos y datos de prueba
+- Entornos: `dev` (local), `staging` (mirror producción), `ci`.
+- Mantener scripts para poblar DB con datos anonimizados.
+- Versionado de configuraciones y seeds en `tests/fixtures/`.
+
+## Matriz de cobertura (plantilla)
+| ID Req | Caso de Uso | Módulo | Tipo Prueba | ID Caso | Prioridad | Estado |
+|---|---|---:|---|---|---:|---|
+| REQ-01 | Registrar persona | API/DB | E2E / Unit | TC-001 | Alta | No ejecutado |
+
+## Plantilla: Plan de Pruebas
+```
+Título: Plan de Pruebas — Censo Rural
+Versión: 0.1
+Autor: <nombre>
+Fecha: <fecha>
+
+1. Introducción
+  - Objetivo del plan
+  - Alcance (web / escritorio)
+
+2. Referencias
+  - Casos de uso
+  - Requisitos funcionales y no funcionales
+
+3. Ambiente de pruebas
+  - Descripción de entornos (dev, staging, ci)
+  - Datos de prueba y cómo restaurarlos
+
+4. Estrategia de pruebas
+  - Tipos de pruebas y herramientas
+  - Criterios de entrada/salida
+
+5. Matriz de cobertura
+
+6. Cronograma
+
+7. Riesgos y contingencias
+
+8. Artefactos entregables
+```
+
+## Plantilla: Caso de Prueba (TC)
+| Campo | Contenido |
+|---|---|
+| ID | TC-XXX |
+| Título | Breve descripción |
+| Requisito asociado | REQ-XX |
+| Prioridad | Alta/Media/Baja |
+| Tipo | Unit/Integración/E2E/Manual |
+| Precondiciones | Estado inicial, datos necesarios |
+| Pasos | 1) ... 2) ... |
+| Datos de prueba | JSON / CSV / ejemplo |
+| Resultado esperado | Descripción precisa |
+| Resultado real | (a completar) |
+| Evidencia | Logs, pantallazos, links a attachments |
+| Responsable | Nombre |
+| Fecha ejecución | YYYY-MM-DD |
+
+## Checklist de ejecución (manual/rápida)
+- [ ] Ambiente preparado (DB, servicios)
+- [ ] Datos de prueba cargados
+- [ ] Casos seleccionados para la ejecución
+- [ ] Evidencias adjuntadas por caso
+- [ ] Incidencias registradas en tracker
+
+## Plantilla: Bitácora de Pruebas
+Fecha | Ejecutor | Caso TC | Resultado | Observaciones | Link evidencia
+---|---|---|---|---|---
+
+## Plantilla: Informe de Resultados
+1. Portada (proyecto, autor, fecha)
+2. Resumen ejecutivo (hallazgos principales)
+3. Alcance de las pruebas ejecutadas
+4. Métricas (casos ejecutados, pasados, fallos, cobertura)
+5. Incidencias críticas y estado
+6. Recursos utilizados
+7. Lecciones aprendidas
+8. Conclusiones y recomendaciones
+
+## Ejemplo: Caso crítico (registro de persona) — TC-001
+- ID: TC-001
+- Título: Registro exitoso de persona en formulario web
+- Requisito: REQ-01
+- Precondición: Servicio API y DB en staging; usuario con permisos
+- Pasos:
+  1. Abrir formulario `/registro`
+  2. Ingresar datos válidos (nombre, identificación, localidad)
+  3. Enviar formulario
+- Resultado esperado: Respuesta 200; registro persistido en DB; mensaje confirmación mostrado
+
+## Riesgos identificados y contingencias
+- Diferencias entre staging y producción -> usar snapshots y contenedores
+- Datos sensibles -> usar anonimización y entornos aislados
+- Fallos de GUI frágil -> añadir pruebas API para validar lógica subyacente
+
+## Integración CI (ejemplo básico para GitHub Actions)
+```
+name: CI Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Run unit tests
+        run: pytest -q
+```
+
+## Entregables
+- `test_plan_censo_rural.md` (este documento)
+- Carpeta `tests/` con casos automatizados
+- `reports/bitacora.md` y `reports/informe_resultados.md`
+
+## Próximos pasos (sugeridos)
+1. Validar y completar los casos de uso faltantes.
+2. Poblar `tests/` con ejemplos `pytest` y configurar pipeline CI.
+3. Ejecutar una pasada inicial en `staging` y registrar bitácora.
+
+---
+Documento generado automáticamente como plantilla base para pruebas.
+
+
+
+**-*-*-*-*-*-*-*-*-*-*-*--*----*-*-*-*-*-*-*-*--*---****----****--**----***--**-*-*-*-*-*-*-*-*-*-*-*--*----*-*-*-*-*-*-*-*--*---****----****--**----***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+Diseño y Desarrollo de servicios web - caso GA7-220501096-AA5-EV01
+Proyecto Censo Rural
+Ficha 3070299
+Isidro Jesus Gallardo Navarro
+video:https://www.youtube.com/watch?v=W6KIFsL64Do 
+Repo:https://github.com/Kalixt044/DBInterface
