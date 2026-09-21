@@ -1,154 +1,143 @@
-# Plan de Pruebas — Proyecto Censo Rural
+# Plan de pruebas — Proyecto Censo Rural
 
 Fecha: 2026-08-30
 
-## Resumen ejecutivo
-- Objetivo: Definir y proveer plantillas y artefactos para ejecutar pruebas en las versiones Web y Escritorio (Python) del proyecto "Censo Rural", cubriendo los criterios de `sem1_mes18.txt`.
+## 1. Resumen ejecutivo
+- Objetivo: definir la estrategia de pruebas para las versiones web y de escritorio del sistema Censo Rural.
+- Alcance: validación funcional, de integración, de validación de entrada, de regresión y de rendimiento.
+- Base documental: [agosto_4Sem.txt](agosto_4Sem.txt), [sem1_mes18.txt](sem1_mes18.txt) y la estructura real del proyecto.
 
-## Alcance
-- Web: UI, API/Backend, integración, seguridad, accesibilidad y rendimiento.
-- Escritorio (Python): lógica, persistencia, GUI (si aplica), instalación/packaging y rendimiento.
+## 2. Alcance
+- Versión desktop: validación del flujo de captura, cálculo de edad, formato y almacenamiento en CSV.
+- Versión web: validación del formulario, API, persistencia en SQLite y operaciones CRUD.
 
-## Criterios mapeados
-- Diseñar casos de prueba que verifiquen funcionalidades según casos de uso.
-- Definir ambiente de pruebas que refleje condiciones de producción.
-- Ejecutar pruebas conforme al plan y documentar trazabilidad (bitácora, informes).
-- Entregar documentos con formato (portada, introducción, conclusiones).
+## 3. Criterios de validación
+- comprobar que se cumplen los requisitos funcionales del sistema,
+- verificar el manejo de errores ante datos inválidos,
+- asegurar la persistencia y trazabilidad de la información,
+- documentar la ejecución de pruebas y su estado final.
 
-## Estrategia de pruebas
-- Tipos: Unitarias, Integración, E2E/UI, Rendimiento, Seguridad, Accesibilidad, Regresión.
-- Herramientas recomendadas:
-  - Unit/Integration: `pytest`
-  - Web E2E: Playwright (preferible) o Selenium
-  - Desktop GUI: `pytest-qt`, `PyAutoGUI` o `robotframework` según stack
-  - Performance: Locust o jMeter
-  - Seguridad: Bandit (Python), OWASP ZAP (web)
-  - CI: GitHub Actions / GitLab CI
+## 4. Entorno de pruebas
+- Desarrollo local con Linux.
+- Python 3.12 o superior.
+- FastAPI para la API web.
+- React para la interfaz web.
+- SQLite como base de datos para pruebas.
+- CSV para la versión desktop.
+- Datos de prueba controlados, no sensibles.
 
-## Entornos y datos de prueba
-- Entornos: `dev` (local), `staging` (mirror producción), `ci`.
-- Mantener scripts para poblar DB con datos anonimizados.
-- Versionado de configuraciones y seeds en `tests/fixtures/`.
+## 5. Estrategia de pruebas
+- Funcionales: validan que cada requisito del sistema se cumple.
+- De integración: verifican la comunicación frontend-backend.
+- De validación: controlan entradas vacías o mal formateadas.
+- De regresión: aseguran que las funcionalidades críticas sigan funcionando.
+- De rendimiento: evalúan la respuesta frente a volumen moderado de datos.
 
-## Matriz de cobertura (plantilla)
-| ID Req | Caso de Uso | Módulo | Tipo Prueba | ID Caso | Prioridad | Estado |
-|---|---|---:|---|---|---:|---|
-| REQ-01 | Registrar persona | API/DB | E2E / Unit | TC-001 | Alta | No ejecutado |
+## 6. Matriz de cobertura
 
-## Plantilla: Plan de Pruebas
-```
-Título: Plan de Pruebas — Censo Rural
-Versión: 0.1
-Autor: <nombre>
-Fecha: <fecha>
+| ID | Requisito | Versión | Tipo de prueba |Prioridad|
+|---|---|---|---|---|
+| TC-01 | Registro válido | Escritorio | Funcional | Alta |
+| TC-02 | Cálculo de edad | Escritorio | Funcional | Alta |
+| TC-03 | Fecha inválida | Escritorio | Validación | Alta |
+| TC-04 | Guardado en CSV | Escritorio | Integración | Alta |
+| TC-05 | Campos obligatorios | Escritorio | Funcional | Alta |
+| TC-06 | Registro válido en web | Web | Funcional | Alta |
+| TC-07 | Validación formulario web | Web | Validación | Alta |
+| TC-08 | Consulta de registros | Web | Funcional | Alta |
+| TC-09 | Actualización | Web | Funcional | Alta |
+| TC-10 | Eliminación | Web | Funcional | Alta |
+| TC-11 | Error 404 | Web | Integración | Media |
+| TC-12 | Error 400 | Web | Integración | Media |
+| TC-13 | Persistencia SQLite | Web | Integración | Alta |
+| TC-14 | Regresión | Web / Escritorio | Regresión | Media |
+| TC-15 | Rendimiento | Web / Escritorio | Rendimiento | Media |
 
-1. Introducción
-  - Objetivo del plan
-  - Alcance (web / escritorio)
+## 7. Casos de prueba
 
-2. Referencias
-  - Casos de uso
-  - Requisitos funcionales y no funcionales
+### TC-01: Registro exitoso en escritorio
+- Objetivo: verificar que se guarda un registro válido.
+- Resultado esperado: la información queda almacenada y el sistema muestra confirmación.
 
-3. Ambiente de pruebas
-  - Descripción de entornos (dev, staging, ci)
-  - Datos de prueba y cómo restaurarlos
+### TC-02: Cálculo de edad en escritorio
+- Objetivo: verificar que la edad es coherente con la fecha de nacimiento.
+- Resultado esperado: el valor calculado coincide con la realidad.
 
-4. Estrategia de pruebas
-  - Tipos de pruebas y herramientas
-  - Criterios de entrada/salida
+### TC-03: Fecha inválida en escritorio
+- Objetivo: comprobar que no se acepta una fecha mal escrita.
+- Resultado esperado: se bloquea la operación y se informa al usuario.
 
-5. Matriz de cobertura
+### TC-04: Guardado en CSV
+- Objetivo: validar la persistencia en archivo CSV.
+- Resultado esperado: el registro queda incluido en la estructura esperada.
 
-6. Cronograma
+### TC-05: Campos obligatorios faltantes
+- Objetivo: verificar que no se graba información incompleta.
+- Resultado esperado: no se ejecuta la operación y se muestra un mensaje de error.
 
-7. Riesgos y contingencias
+### TC-06: Registro exitoso en web
+- Objetivo: comprobar el flujo completo del formulario y la API.
+- Resultado esperado: la operación responde correctamente y persiste el registro.
 
-8. Artefactos entregables
-```
+### TC-07: Validación de formulario web
+- Objetivo: asegurar que se rechaza la información incompleta.
+- Resultado esperado: se devuelve error y no se genera el registro.
 
-## Plantilla: Caso de Prueba (TC)
-| Campo | Contenido |
-|---|---|
-| ID | TC-XXX |
-| Título | Breve descripción |
-| Requisito asociado | REQ-XX |
-| Prioridad | Alta/Media/Baja |
-| Tipo | Unit/Integración/E2E/Manual |
-| Precondiciones | Estado inicial, datos necesarios |
-| Pasos | 1) ... 2) ... |
-| Datos de prueba | JSON / CSV / ejemplo |
-| Resultado esperado | Descripción precisa |
-| Resultado real | (a completar) |
-| Evidencia | Logs, pantallazos, links a attachments |
-| Responsable | Nombre |
-| Fecha ejecución | YYYY-MM-DD |
+### TC-08: Consulta de registros web
+- Objetivo: verificar que la API entrega la información correcta.
+- Resultado esperado: la consulta retorna registros existentes.
 
-## Checklist de ejecución (manual/rápida)
-- [ ] Ambiente preparado (DB, servicios)
-- [ ] Datos de prueba cargados
-- [ ] Casos seleccionados para la ejecución
-- [ ] Evidencias adjuntadas por caso
-- [ ] Incidencias registradas en tracker
+### TC-09: Actualización de registro
+- Objetivo: validar que una modificación queda guardada.
+- Resultado esperado: el registro cambia de forma consistente.
 
-## Plantilla: Bitácora de Pruebas
-Fecha | Ejecutor | Caso TC | Resultado | Observaciones | Link evidencia
----|---|---|---|---|---
+### TC-10: Eliminación de registro
+- Objetivo: comprobar que un registro puede borrarse.
+- Resultado esperado: el dato deja de aparecer en la consulta.
 
-## Plantilla: Informe de Resultados
-1. Portada (proyecto, autor, fecha)
-2. Resumen ejecutivo (hallazgos principales)
-3. Alcance de las pruebas ejecutadas
-4. Métricas (casos ejecutados, pasados, fallos, cobertura)
-5. Incidencias críticas y estado
-6. Recursos utilizados
-7. Lecciones aprendidas
-8. Conclusiones y recomendaciones
+### TC-11: Error 404
+- Objetivo: validar la respuesta del sistema ante registros inexistentes.
+- Resultado esperado: respuesta de error con mensaje claro.
 
-## Ejemplo: Caso crítico (registro de persona) — TC-001
-- ID: TC-001
-- Título: Registro exitoso de persona en formulario web
-- Requisito: REQ-01
-- Precondición: Servicio API y DB en staging; usuario con permisos
-- Pasos:
-  1. Abrir formulario `/registro`
-  2. Ingresar datos válidos (nombre, identificación, localidad)
-  3. Enviar formulario
-- Resultado esperado: Respuesta 200; registro persistido en DB; mensaje confirmación mostrado
+### TC-12: Error 400
+- Objetivo: comprobar el manejo de datos incompletos o inválidos.
+- Resultado esperado: respuesta 400 con detalle del problema.
 
-## Riesgos identificados y contingencias
-- Diferencias entre staging y producción -> usar snapshots y contenedores
-- Datos sensibles -> usar anonimización y entornos aislados
-- Fallos de GUI frágil -> añadir pruebas API para validar lógica subyacente
+### TC-13: Persistencia SQLite
+- Objetivo: verificar la integridad del almacenamiento en base de datos.
+- Resultado esperado: el registro queda visible en la tabla correspondiente.
 
-## Integración CI (ejemplo básico para GitHub Actions)
-```
-name: CI Tests
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-      - name: Install deps
-        run: pip install -r requirements.txt
-      - name: Run unit tests
-        run: pytest -q
-```
+### TC-14: Prueba de regresión
+- Objetivo: confirmar que las pruebas críticas siguen funcionando tras cambios.
+- Resultado esperado: sin regresiones en el flujo principal.
 
-## Entregables
-- `test_plan_censo_rural.md` (este documento)
-- Carpeta `tests/` con casos automatizados
-- `reports/bitacora.md` y `reports/informe_resultados.md`
+### TC-15: Rendimiento moderado
+- Objetivo: considerar comportamiento bajo carga controlada.
+- Resultado esperado: respuesta estable sin bloqueos importantes.
 
-## Próximos pasos (sugeridos)
-1. Validar y completar los casos de uso faltantes.
-2. Poblar `tests/` con ejemplos `pytest` y configurar pipeline CI.
-3. Ejecutar una pasada inicial en `staging` y registrar bitácora.
+## 8. Riesgos y contingencias
+- Fechas mal digitadas.
+- Datos incompletos.
+- Duplicidad de documentos.
+- Diferencias entre entorno local y producción.
+- Inconsistencias entre CSV y SQLite.
+
+Contingencias:
+- preparar datos de prueba controlados,
+- ejecutar validaciones previas antes de cada prueba,
+- documentar incidencias y aplicar correcciones,
+- repetir pruebas tras cambios en la lógica.
+
+## 9. Entregables
+- plan de pruebas,
+- matriz de cobertura,
+- casos de prueba,
+- bitácora de ejecución,
+- informe de resultados,
+- trazabilidad requisitos-pruebas.
+
+## 10. Conclusión
+El plan propuesto es adecuado para este proyecto porque cubre las pruebas funcionales reales del sistema, la validación de entrada, la persistencia y la integración de las capas desktop y web. Se alinea con la estructura del software y con los requisitos del censo rural.
 
 ---
-Documento generado automáticamente como plantilla base para pruebas.
+Documento base ajustado para evidencias de pruebas del sistema Censo Rural.

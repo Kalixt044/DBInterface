@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Landing page del proyecto Censo Rural, con versión escritorio en Python y versión web para la recolección y gestión de datos del campo."
+    />
+    <title>Censo Rural | Proyecto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#inicio" class="brand" aria-label="Censo Rural inicio">
+          <span class="brand-mark">CR</span>
+          <span class="brand-text">Censo Rural</span>
+        </a>
+
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="site-nav" id="site-nav">
+          <a href="#inicio">Inicio</a>
+          <a href="#soluciones">Soluciones</a>
+          <a href="#beneficios">Beneficios</a>
+          <a href="#instalacion">Instalación</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Proyecto de innovación comunitaria</p>
+            <h1>Digitalizamos el censo rural para registrar, verificar y fortalecer cada comunidad.</h1>
+            <p class="lead">
+              Un sistema pensado para apoyar la recolección de datos personales en zonas rurales,
+              integrando una experiencia de escritorio con Python y una versión web preparada para
+              trabajo colaborativo, trazabilidad y consultas rápidas.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#soluciones">Explorar soluciones</a>
+              <a class="btn btn-secondary" href="#beneficios">Ver beneficios</a>
+            </div>
+
+            <ul class="hero-stats" aria-label="Estadísticas del proyecto">
+              <li>
+                <strong data-count="1200">0</strong>
+                <span>Registros</span>
+              </li>
+              <li>
+                <strong data-count="96">0</strong>
+                <span>% precisión</span>
+              </li>
+              <li>
+                <strong data-count="2">0</strong>
+                <span>Versiones</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="hero-visual reveal">
+            <div class="dashboard-card">
+              <div class="card-header">
+                <span class="status-dot"></span>
+                <span>Panel de operación</span>
+              </div>
+
+              <div class="metric-row">
+                <div>
+                  <span class="metric-label">Personas registradas</span>
+                  <strong>1,248</strong>
+                </div>
+                <span class="metric-badge success">+12%</span>
+              </div>
+
+              <div class="mini-chart" aria-hidden="true">
+                <span style="height: 40%"></span>
+                <span style="height: 58%"></span>
+                <span style="height: 48%"></span>
+                <span style="height: 70%"></span>
+                <span style="height: 100%"></span>
+                <span style="height: 84%"></span>
+                <span style="height: 92%"></span>
+              </div>
+
+              <div class="info-list">
+                <div>
+                  <span>Validación</span>
+                  <strong>Automática</strong>
+                </div>
+                <div>
+                  <span>Base de datos</span>
+                  <strong>SQLite</strong>
+                </div>
+                <div>
+                  <span>Acceso</span>
+                  <strong>Escritorio + Web</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-intro" id="soluciones">
+        <div class="container reveal">
+          <p class="section-tag">Soluciones</p>
+          <h2>Dos versiones, una misma misión de servicio.</h2>
+        </div>
+      </section>
+
+      <section class="cards-section">
+        <div class="container cards-grid">
+          <article class="info-card reveal">
+            <div class="card-icon desktop">PY</div>
+            <div class="card-content">
+              <span class="card-badge">Versión escritorio</span>
+              <h3>Python + interfaz local</h3>
+              <p>
+                Diseñada para trabajo directo y operativo, con captura segura de datos personales y
+                validación local para respaldar el proceso de levantamiento del censo.
+              </p>
+              <ul>
+                <li>Registro guiado de información</li>
+                <li>Validación de campos y consistencia</li>
+                <li>Persistencia local con SQLite</li>
+                <li>Uso orientado a equipos campo</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="info-card reveal accent">
+            <div class="card-icon web">WEB</div>
+            <div class="card-content">
+              <span class="card-badge">Versión web</span>
+              <h3>Acceso remoto y digital</h3>
+              <p>
+                Pensada para compartir información y mejorar la colaboración entre áreas, con una
+                experiencia moderna que facilita la consulta, gestión y visualización de datos.
+              </p>
+              <ul>
+                <li>Interfaz responsive y moderna</li>
+                <li>Acceso desde navegador</li>
+                <li>Gestión centralizada de datos</li>
+                <li>Paneles y flujos de trabajo ágiles</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="benefits-section" id="beneficios">
+        <div class="container reveal">
+          <p class="section-tag">Beneficios</p>
+          <h2>Una solución pensada para el territorio.</h2>
+        </div>
+
+        <div class="container benefit-grid">
+          <article class="benefit-item reveal">
+            <h3>Velocidad</h3>
+            <p>Reduce el tiempo de recolección y validación para cada registro del censo.</p>
+          </article>
+          <article class="benefit-item reveal">
+            <h3>Confiabilidad</h3>
+            <p>Verifica información clave antes de integrarla a la base de datos o a la plataforma web.</p>
+          </article>
+          <article class="benefit-item reveal">
+            <h3>Escalabilidad</h3>
+            <p>Puede evolucionar desde una versión local hasta una solución con más usuarios y vistas.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="install-section reveal" id="instalacion">
+        <div class="container">
+          <p class="section-tag">Instalación</p>
+          <h2>Guía rápida para instalar cada versión del programa.</h2>
+
+          <div class="install-grid">
+            <article class="install-card">
+              <div class="card-header-block">
+                <span class="card-badge">Versión escritorio</span>
+                <h3>Python</h3>
+              </div>
+
+              <ol class="install-steps">
+                <li>Descarga la versión disponible desde el repositorio oficial.</li>
+                <li>Abre la terminal dentro de la carpeta del proyecto.</li>
+                <li>Instala las dependencias con:<br /><code>pip install -r requirements.txt</code></li>
+                <li>Ejecuta la aplicación con:<br /><code>python main.py</code></li>
+              </ol>
+            </article>
+
+            <article class="install-card accent">
+              <div class="card-header-block">
+                <span class="card-badge">Versión web</span>
+                <h3>Aplicación en navegador</h3>
+              </div>
+
+              <ol class="install-steps">
+                <li>Clona el repositorio de GitHub del proyecto.</li>
+                <li>Accede a la carpeta raíz del proyecto.</li>
+                <li>Instala las dependencias con:<br /><code>npm install</code></li>
+                <li>Inicia el entorno local con:<br /><code>npm run dev</code></li>
+              </ol>
+            </article>
+          </div>
+
+          <div class="repo-card">
+            <span class="repo-label">Repositorio GitHub</span>
+            <a href="https://github.com/tu-usuario/tu-repositorio" target="_blank" rel="noreferrer">
+              github.com/tu-usuario/tu-repositorio
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section reveal" id="contacto">
+        <div class="container">
+          <p class="section-tag">Contacto</p>
+          <h2>Estamos para ayudarte.</h2>
+
+          <div class="contact-grid">
+            <article class="contact-card">
+              <h3>Email</h3>
+              <p>soporte@censorural.org</p>
+            </article>
+
+            <article class="contact-card">
+              <h3>GitHub</h3>
+              <a href="https://github.com/tu-usuario/tu-repositorio" target="_blank" rel="noreferrer">
+                github.com/tu-usuario/tu-repositorio
+              </a>
+            </article>
+
+            <article class="contact-card">
+              <h3>Soporte</h3>
+              <p>+52 000 000 0000</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div>
+          <a href="#inicio" class="brand footer-brand">
+            <span class="brand-mark">CR</span>
+            <span class="brand-text">Censo Rural</span>
+          </a>
+          <p>Un proyecto para documentar, organizar y fortalecer la información de comunidades rurales.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="#inicio">Inicio</a>
+          <a href="#soluciones">Soluciones</a>
+          <a href="#beneficios">Beneficios</a>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <span>© <span id="year">2026</span> Censo Rural</span>
+        <span>Hecho para comunidades y toma de decisiones.</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

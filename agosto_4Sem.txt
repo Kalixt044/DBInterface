@@ -1,0 +1,89 @@
+Reporte de plan de pruebas ejecutadas. GA9-220501096-AA3-
+EV02
+Criterios de evaluación:
+• Documenta las pruebas realizadas para mantener la trazabilidad en el comportamiento del
+software.
+2. Lista de chequeo
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+Sí NO
+1. Documentó de manera apropiada las pruebas de software. 60%
+2. Realizó la trazabilidad de manera acertada al comportamiento del software. 30%
+3. Realizó el trabajo con las normas básicas de presentación de un documento escrito. 10%
+
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*
+
+Documenta pruebas de software de acuerdo con la
+planificación GA9-220501096-AA3-EV01
+Criterios de evaluación:
+• Realiza pruebas al software de acuerdo con el plan de pruebas.
+• Documenta las pruebas realizadas para mantener la trazabilidad en el comportamiento del
+software.
+2. Lista de chequeo
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+1. Realiza las pruebas de software satisfactoriamente. 40%
+2. Realiza los videos de la ejecución de las pruebas de software de manera correcta. 30%
+3. Documenta el proceso de las pruebas de software en los formatos establecidos de manera correcta. 20%
+4. Realiza el trabajo con las normas básicas de presentación de un documento escrito. 10%
+
+-*-*-*--*-*-***-*-*-*-**-*-*-*-*-*--***-*-*--*-*-*-*--
+
+Realiza ajustes en los procesos de desarrollo. GA11-
+220501098-AA3-EV01
+Criterios de Evaluación:
+ Ajusta procesos del desarrollo de software de acuerdo con el referente de calidad adoptado.
+2. LISTA DE CHEQUEO
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+Sí NO
+1. Reconoce la metodología seleccionada. 30%
+2. Propone los cambios en la secuencia de ejecución de procesos del desarrollo de software tanto a nivel operativo como técnico. 40%
+3. Utilizó buenas prácticas de calidad de acuerdo con el referente de los marcos de trabajo. 15%
+4. Documentó los cambios sugeridos. 15%
+
+*-*---*-*-*-*-*-*-**-*---*--*-*-*-*-*-*-*-*-*-*--
+
+Realizar informe de las experiencias aprendidas en el proceso de
+verificación del software. GA11-220501098-AA2-EV02
+Criterios de Evaluación:
+Evalúa comportamientos del sistema de acuerdo con los requisitos no funcionales del software.
+Elabora informe de evaluación de la calidad de acuerdo con los resultados de la verificación.
+Crea bitácora de lecciones aprendidas a partir de los resultados de la verificación del software.
+2. LISTA DE CHEQUEO
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+1. Realizó el documento con las lecciones aprendidas. 50%
+2. Tuvo en cuenta las bitácoras con los procesos documentados. 25%
+3. Utilizó buenas prácticas de calidad de acuerdo con el referente de los marcos de trabajo. 15%
+4. Presentó el trabajo siguiendo las normas básicas de presentación de un documento “portada, introducción y conclusiones”. 10%
+
+
+*-*-*--*-*-*-**-*--*-*-*-*-*-*--*-*-*-*-*-*-**--****--**
+Documento con las verificaciones de condiciones de calidad
+del producto de software ajustado. GA11-220501098-AA3-
+EV02
+Criterios de Evaluación:
+Determina las acciones correctivas, preventivas y de mejoramiento de acuerdo con los
+resultados de la evaluación.
+2. LISTA DE CHEQUEO
+No. VARIABLES/INDICADORES DE LOGRO CUMPLE Observaciones
+SÍ NO
+1. Realizó el documento en Word con la verificación de condiciones. 50%
+2. En el documento describe las características, subcaracterísticas, propiedades de calidad y métricas que se utilizaron para determinar el valor del producto software. 10%
+3. En el documento describe el conjunto de actividades y tareas que se realizaron para llevar a cabo el proceso de evaluación del producto de software. 10%
+4. En el documento describe el conjunto de herramientas software que permitieron automatizar la medición, aplicación de criterios de evaluación y visualización delos resultados. 10%
+
+5. Utilizó buenas prácticas de calidad de acuerdo con el referente de los marcos de trabajo. 10%
+6. Utilizó las normas básicas de presentación de undocumento escrito, es decir el documento debe tener como mínimo una portada, introducción y conclusiones. 10%
+
+
+
+
+
+
+
+
+
+
+
+
+
